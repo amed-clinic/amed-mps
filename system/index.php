@@ -77,7 +77,7 @@
             </div>
 
 
-          <script type="text/javascript">
+          <script>
             $(document).ready(function(e) {
                 $("#log_username").focus();
                 $("#log_username").keypress(function(e) {
@@ -102,7 +102,7 @@
 
                             $(".show_popup").html(b[1]);
                             setTimeout(function(d){
-                              window.location.reload();
+                              location.reload();
                             },2000);
 
                           }else {
@@ -128,7 +128,7 @@
 
                         $(".show_popup").html(b[1]);
                         setTimeout(function(d){
-                          window.location.reload();
+                          location.reload();
                         },2000);
 
                       }else {
@@ -191,7 +191,7 @@
 
                         $(".show_popup").html(b[1]);
                         setTimeout(function(data){
-                          window.location.reload();
+                          location.reload();
                         },2000);
 
                       }else {
@@ -215,7 +215,7 @@
 
                             $(".show_popup").html(b[1]);
                             setTimeout(function(data){
-                              window.location.reload();
+                              location.reload();
                             },2000);
 
                           }else {
@@ -233,14 +233,14 @@
         </div>
         <!-- /.lockscreen-item -->
         <div class="help-block text-center">
-          ป้อนรหัสผ่านเพื่อใช้งานระบบของคุณ
+          Please insert Password.
         </div>
         <div class="text-center">
-          <a style="cursor:pointer;" class="logout_system">หรือ ลงชื่อเข้าใช้งานใหม่</a>
+          <a style="cursor:pointer;" class="logout_system">Or New Login</a>
           <script>
             $(document).ready(function() {
               $(".logout_system").click(function(e) {
-                $.post("../../query/check-data.php", { post :"clear_system" }, function(d){  window.location.reload(); });
+                $.post("../../query/check-data.php", { post :"clear_system" }, function(d){  location.reload(); });
               });
             });
           </script>
@@ -307,11 +307,11 @@
             </div>
 
             <ul class="sidebar-menu" data-widget="tree">
-              <li class="header">MainMenu</li>
+              <li class="header">Main Menu</li>
               <li class="<?=$UrlPage=="dashboard"?"active":"";?>"><a href="<?=$LinkWeb;?>dashboard"><i class="fa fa-home"></i> <span> Dashboard</span></a></li>
               <li class="<?=$UrlPage=="profile"?"active":"";?>"><a href="<?=$LinkWeb;?>profile"><i class="fa fa-vcard-o"></i> <span> Profile</span></a></li>
 
-              <li class="header">Menulist</li>
+              <li class="header">Menu list</li>
               <li class="<?=$UrlPage=="new-order"?"active":"";?>"><a href="<?=$LinkWeb;?>new-order"><i class="fa fa-plus"></i> <span><span class="text-red"><b>New</b></span> Order</span></a></li>
               <li class="<?=$UrlPage=="view-order"?"active":"";?>"><a href="<?=$LinkWeb;?>view-order"><i class="fa fa-search"></i> <span> View Order</span></a></li>
               <li class="<?=$UrlPage=="calendar"?"active":"";?>"><a href="<?=$LinkWeb;?>calendar"><i class="fa fa-calendar"></i> <span> Calendar</span></a></li>
@@ -385,7 +385,7 @@
       <script>
         $(document).ready(function() {
           $(".logout_system").click(function(e) {
-            $.post("../../query/check-data.php", { post :"clear_system" }, function(d){  window.location.reload(); });
+            $.post("../../query/check-data.php", { post :"clear_system" }, function(d){  location.reload(); });
           });
         });
       </script>
