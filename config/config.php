@@ -8,13 +8,13 @@ date_default_timezone_set("utc");
 
 
 global $Link, $Host, $User, $Pass, $DBname;
-global $CookieID,$CookieName,$CookieType,$CookieBranch;
-global $SessionID,$SessionName,$SessionType,$SessionBranch;
+global $CookieID,$CookieName,$CookieType,$CookieBranch,$CookieGroup;
+global $SessionID,$SessionName,$SessionType,$SessionBranch,$SessionGroup;
 
 
 
 $LinkWeb 		= "https://mps.amedclinic.com/";
-$LinkPath 		  = $LinkWeb.$_SERVER['REQUEST_URI'];
+$LinkPath 		  = "https://mps.amedclinic.com".$_SERVER['REQUEST_URI'];
 $LinkHostWeb 		= "https://amedclinic.com/mps/";
 $LinkHostLocal 	= $LinkWeb;
 $LinkHostAdmin  = "";
@@ -42,11 +42,13 @@ $CookieID = 'C_UID'; //ID_admin
 $CookieName = 'C_UNAME'; //name_admin
 $CookieType = 'C_UTYPEID'; //mem_group_name
 $CookieBranch = 'C_UBRANCH'; //mem_group_name
+$CookieGroup = 'C_UGROUP'; //mem_group
 
 $SessionID = 'S_UID'; // Member_id
 $SessionName = 'S_UNAME'; //Company
 $SessionType = 'S_UTYPEID'; //member_group
-$SessionBranch = 'S_UBRANCH'; //member_group
+$SessionBranch = 'S_UBRANCH'; //member_branch
+$SessionGroup = 'S_UGROUP'; //member_group
 
 
 if (!empty($_SESSION[$SessionID]) ||

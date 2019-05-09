@@ -43,38 +43,39 @@
         <div class="login-box-body">
           <p class="login-box-msg"><b>Sign in to your account</b></p>
 
-
-            <div class="form-group has-feedback">
-              <input type="text" class="form-control" placeholder="Username" id="log_username" autocomplete="off">
-              <span class="glyphicon glyphicon-user form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-              <input type="password" class="form-control" placeholder="Password" id="log_password" autocomplete="off">
-              <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-              <select class="form-control select2" id="log_branch" name="">
-                <?
-                  $SqlBranch = "SELECT *
-                                FROM mps_branch
-                                ORDER BY branch_name ASC";
-                  if (select_num($SqlBranch)>0) {
-                    ?><option value="">Select Branch</option><?
-                    foreach (select_tb($SqlBranch) as $row ) {
-                      ?><option value="<?=$row['branch_id'];?>"><?=$row['branch_name'];?></option><?
-                    }
-                  }else {
-                    ?><option value="">Not founds</option><?
-                  }
-                ?>
-              </select>
-            </div>
-            <div class="row">
-              <div class="col-md-4 col-md-offset-8 col-sm-4 col-sm-offset-8">
-                <button type="button" class="btn btn-default btn-block" id="login_submit">Sign In</button>
+            <form class="form-horizontal">
+              <div class="form-group has-feedback">
+                <input type="text" class="form-control" placeholder="Username" id="log_username" autocomplete="off">
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
               </div>
-              <div class="col-xs-12 show_popup"></div>
-            </div>
+              <div class="form-group has-feedback">
+                <input type="password" class="form-control" placeholder="Password" id="log_password" autocomplete="off">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+              </div>
+              <div class="form-group has-feedback">
+                <select class="form-control select2" id="log_branch" name="log_branch">
+                  <?
+                    $SqlBranch = "SELECT *
+                                  FROM mps_branch
+                                  ORDER BY branch_name ASC";
+                    if (select_num($SqlBranch)>0) {
+                      ?><option value="">Select Branch</option><?
+                      foreach (select_tb($SqlBranch) as $row ) {
+                        ?><option value="<?=$row['branch_id'];?>"><?=$row['branch_name'];?></option><?
+                      }
+                    }else {
+                      ?><option value="">Not founds</option><?
+                    }
+                  ?>
+                </select>
+              </div>
+              <div class="row">
+                <div class="col-md-4 col-md-offset-8 col-sm-4 col-sm-offset-8">
+                  <button type="button" class="btn btn-default btn-block" id="login_submit">Sign In</button>
+                </div>
+                <div class="col-xs-12 show_popup"></div>
+              </div>
+            </form>
 
 
           <script>
@@ -95,20 +96,20 @@
                             _branch   :$("#log_branch").val(),
                             post :"login"
                         },
-                        function(d){
-                          //alert(data);
-                          var b = d.split('|||');
-                          if (b[0]=='1') {
-
+                        function(data){
+                          var b = data.split('|||');
+                          if (b[0]==1) {
                             $(".show_popup").html(b[1]);
-                            setTimeout(function(d){
-                              location.reload();
+                            setTimeout(function(data){
+                              location.reload(true);
                             },2000);
 
                           }else {
                             $(".show_popup").html(b[1]);
                           }
                         });
+                      }else {
+                        $(".show_popup").html("<p class='text-center'><i class='fa fa-shield'></i> Please check data.</p>");
                       }
                     }
                 });
@@ -121,15 +122,14 @@
                         _branch   :$("#log_branch").val(),
                         post :"login"
                     },
-                    function(d){
-                      //alert(d);
-                      var b = d.split('|||');
-                      if (b[0]=='1') {
-
+                    function(data){
+                      var b = data.split('|||');
+                      if (b[0]==1) {
                         $(".show_popup").html(b[1]);
-                        setTimeout(function(d){
-                          location.reload();
+                        setTimeout(function(data){
+                          location.reload(true);
                         },2000);
+                        return true;
 
                       }else {
                         $(".show_popup").html(b[1]);
@@ -159,7 +159,7 @@
         <div class="lockscreen-item">
           <!-- lockscreen image -->
           <div class="lockscreen-image">
-            <img src="<? if (base64url_decode($_COOKIE[$CookiePhoto])=='-') { echo $LinkHostWeb."images/avatar.png"; }else{ echo $LinkHostWeb."file/user/".base64url_decode($_COOKIE[$CookiePhoto]); } ?>" alt="User Image">
+            <img src="<?=$LinkHostWeb;?>images/avatar.png" alt="User Image">
           </div>
           <!-- /.lockscreen-image -->
 
@@ -188,11 +188,11 @@
                     function(data){
                       var b = data.split("|||");
                       if (b[0]==1) {
-
                         $(".show_popup").html(b[1]);
                         setTimeout(function(data){
-                          location.reload();
+                          location.reload(true);
                         },2000);
+                        return true;
 
                       }else {
                         $(".show_popup").html(b[1]);
@@ -212,10 +212,9 @@
                         function(data){
                           var b = data.split("|||");
                           if (b[0]==1) {
-
                             $(".show_popup").html(b[1]);
                             setTimeout(function(data){
-                              location.reload();
+                              location.reload(true);
                             },2000);
 
                           }else {
@@ -240,7 +239,7 @@
           <script>
             $(document).ready(function() {
               $(".logout_system").click(function(e) {
-                $.post("../../query/check-data.php", { post :"clear_system" }, function(d){  location.reload(); });
+                $.post("../../query/check-data.php", { post :"clear_system" }, function(d){  location.reload(true); });
               });
             });
           </script>
@@ -385,7 +384,7 @@
       <script>
         $(document).ready(function() {
           $(".logout_system").click(function(e) {
-            $.post("../../query/check-data.php", { post :"clear_system" }, function(d){  location.reload(); });
+            $.post("../../query/check-data.php", { post :"clear_system" }, function(d){  location.reload(true); });
           });
         });
       </script>

@@ -20,7 +20,7 @@ if ($_POST['post']=="clear_system") {
 if ($_POST['post']=="login") {
   $sql = "SELECT ml.*,ms.*
           FROM mps_login ml
-          INNER JOIN mps_sale ms ON ( ml.sale_id = ms.sale_id )
+          LEFT OUTER JOIN mps_sale ms ON ( ml.sale_id = ms.sale_id )
           WHERE  (
                    ml.login_username  = '".$_POST['_username']."' AND
                    ml.login_password_encode = '".base64url_encode($_POST['_password'])."' AND
@@ -29,12 +29,22 @@ if ($_POST['post']=="login") {
                  ) ;";
   if (select_num($sql)>0) {
     foreach (select_tb($sql) as $row) {
+      if ($row['type_login']=='1') {
+        $_SESSION[$SessinGroup] = base64url_encode("Admin");
+      }else {
+        $_SESSION[$SessinGroup] = base64url_encode("Sale");
+      }
+
       $_SESSION[$SessionID] = base64url_encode($row['login_id']);
       $_SESSION[$SessionName] = base64url_encode($row['sale_name']);
       $_SESSION[$SessionType] = base64url_encode($row['type_id']);
       $_SESSION[$SessionBranch] = base64url_encode($row['branch_id']);
 
-
+      if ($row['type_login']=='1') {
+        setcookie($CookieGroup, base64url_encode("Admin"), time() + (86400 * 30), "/"); // 86400 = 1 day
+      }else {
+        setcookie($CookieGroup, base64url_encode("Sale"), time() + (86400 * 30), "/"); // 86400 = 1 day
+      }
       setcookie($CookieID, base64url_encode($row['login_id']), time() + (86400 * 30), "/"); // 86400 = 1 day
       setcookie($CookieName, base64url_encode($row['sale_name']), time() + (86400 * 30), "/"); // 86400 = 1 day
       setcookie($CookieType, base64url_encode($row['type_id']), time() + (86400 * 30), "/"); // 86400 = 1 day
@@ -53,14 +63,14 @@ if ($_POST['post']=="login") {
 if ($_POST['post']=="check_login") {
    $sql = "SELECT ml.*,ms.*
            FROM mps_login ml
-           INNER JOIN mps_sale ms ON ( ml.sale_id = ms.sale_id )
+           LEFT OUTER  JOIN mps_sale ms ON ( ml.sale_id = ms.sale_id )
            WHERE  (
                     ml.login_id    = '".base64url_decode($_COOKIE[$CookieID])."' AND
                     ml.login_password_encode = '".base64url_encode($_POST['_password'])."' AND
                     ml.login_status = '1'
                   ) ;";
-  if (select_num($sql_)>0) {
-    foreach (select_tb($sql_) as $row) {
+  if (select_num($sql)>0) {
+    foreach (select_tb($sql) as $row) {
       $_SESSION[$SessionID] = base64url_encode($row['login_id']);
       $_SESSION[$SessionName] = base64url_encode($row['sale_name']);
       $_SESSION[$SessionType] = base64url_encode($row['type_id']);
