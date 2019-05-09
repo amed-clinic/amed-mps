@@ -59,12 +59,12 @@
                                 FROM mps_branch
                                 ORDER BY branch_name ASC";
                   if (select_num($SqlBranch)>0) {
-                    ?><option value="">เลือกสาขา</option><?
+                    ?><option value="">Select Branch</option><?
                     foreach (select_tb($SqlBranch) as $row ) {
                       ?><option value="<?=$row['branch_id'];?>"><?=$row['branch_name'];?></option><?
                     }
                   }else {
-                    ?><option value="">ไม่พบสาขา</option><?
+                    ?><option value="">Not founds</option><?
                   }
                 ?>
               </select>
@@ -281,10 +281,10 @@
                     <!-- Menu Footer-->
                     <li class="user-footer">
                       <div class="pull-left">
-                        <a href="<?=SITE_URL;?>profile" class="btn btn-default btn-flat">ข้อมูลส่วนตัว</a>
+                        <a href="<?=SITE_URL;?>profile" class="btn btn-default btn-flat">Profile</a>
                       </div>
                       <div class="pull-right">
-                        <button data-toggle="modal" data-target="#modal-signout"  class="btn btn-warning btn-flat">ออกจากระบบ</button>
+                        <button data-toggle="modal" data-target="#modal-signout"  class="btn btn-warning btn-flat">SignOut</button>
                       </div>
                     </li>
                   </ul>
@@ -307,15 +307,16 @@
             </div>
 
             <ul class="sidebar-menu" data-widget="tree">
-              <li class="header">เมนูหลัก</li>
-              <li class="<?=$UrlPage=="dashboard"?"active":"";?>"><a href="<?=$LinkWeb;?>dashboard"><i class="fa fa-home"></i> <span>หน้าแรก</span></a></li>
-              <li class="<?=$UrlPage=="profile"?"active":"";?>"><a href="<?=$LinkWeb;?>profile"><i class="fa fa-vcard-o"></i> <span>ข้อมูลส่วนตัว</span></a></li>
+              <li class="header">MainMenu</li>
+              <li class="<?=$UrlPage=="dashboard"?"active":"";?>"><a href="<?=$LinkWeb;?>dashboard"><i class="fa fa-home"></i> <span> Dashboard</span></a></li>
+              <li class="<?=$UrlPage=="profile"?"active":"";?>"><a href="<?=$LinkWeb;?>profile"><i class="fa fa-vcard-o"></i> <span> Profile</span></a></li>
 
-              <li class="header">รายการ</li>
-              <li class="<?=$UrlPage=="new-order"?"active":"";?>"><a href="<?=$LinkWeb;?>new-order"><i class="fa fa-plus"></i> <span><span class="text-red"><b>เปิด</b></span> รายการใหม่</span></a></li>
-              <li class="<?=$UrlPage=="view-order"?"active":"";?>"><a href="<?=$LinkWeb;?>view-order"><i class="fa fa-search"></i> <span>รายการใหม่</span></a></li>
+              <li class="header">Menulist</li>
+              <li class="<?=$UrlPage=="new-order"?"active":"";?>"><a href="<?=$LinkWeb;?>new-order"><i class="fa fa-plus"></i> <span><span class="text-red"><b>New</b></span> Order</span></a></li>
+              <li class="<?=$UrlPage=="view-order"?"active":"";?>"><a href="<?=$LinkWeb;?>view-order"><i class="fa fa-search"></i> <span> View Order</span></a></li>
+              <li class="<?=$UrlPage=="calendar"?"active":"";?>"><a href="<?=$LinkWeb;?>calendar"><i class="fa fa-calendar"></i> <span> Calendar</span></a></li>
 
-              <li style="border-top: solid 2px #212121;"><a style="cursor:pointer;" data-toggle="modal" data-target="#modal-signout"> <i class="fa fa-power-off"></i><span> ออกจากระบบ</span></a></li>
+              <li style="border-top: solid 2px #212121;"><a style="cursor:pointer;" data-toggle="modal" data-target="#modal-signout"> <i class="fa fa-power-off"></i><span> SignOut</span></a></li>
             </ul>
           </section>
         </aside>
@@ -354,21 +355,21 @@
           <div class="container">
             <div class="row">
               <div class="col-xs-4">
-                <a href="<?=$LinkHostWeb;?>dashboard">
+                <a href="<?=$LinkWeb;?>dashboard">
                     <span class="fa fa-home text-red"></span>
-                    <p class=" visible-xs ft-mb">หน้าแรก</p>
+                    <p class=" visible-xs ft-mb">Dashboard</p>
                 </a>
               </div>
               <div class="col-xs-4">
-                <a href="<?=$LinkHostWeb;?>approve">
+                <a href="<?=$LinkWeb;?>new-order">
                     <span class="fa fa-check-square-o"></span>
-                    <p class=" visible-xs ft-mb">รายการใหม่</p>
+                    <p class=" visible-xs ft-mb">New Order</p>
                 </a>
               </div>
               <div class="col-xs-4">
-                <a href="<?=$LinkHostWeb;?>report">
+                <a href="<?=$LinkWeb;?>report">
                     <span class="fa fa-list-alt"></span>
-                    <p class=" visible-xs ft-mb">ประวัติรายการ</p>
+                    <p class=" visible-xs ft-mb">History</p>
                 </a>
               </div>
             </div>
