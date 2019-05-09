@@ -312,7 +312,7 @@
               <li class="<?=$UrlPage=="profile"?"active":"";?>"><a href="<?=$LinkWeb;?>profile"><i class="fa fa-vcard-o"></i> <span>ข้อมูลส่วนตัว</span></a></li>
 
               <li class="header">รายการ</li>
-              <li class="<?=$UrlPage=="new-order"?"active":"";?>"><a href="<?=$LinkWeb;?>new-order"><i class="fa fa-circle-plus"></i> <span><span class="text-red"><b>เปิด</b></span> รายการใหม่</span></a></li>
+              <li class="<?=$UrlPage=="new-order"?"active":"";?>"><a href="<?=$LinkWeb;?>new-order"><i class="fa fa-plus"></i> <span><span class="text-red"><b>เปิด</b></span> รายการใหม่</span></a></li>
               <li class="<?=$UrlPage=="view-order"?"active":"";?>"><a href="<?=$LinkWeb;?>view-order"><i class="fa fa-search"></i> <span>รายการใหม่</span></a></li>
 
               <li style="border-top: solid 2px #212121;"><a style="cursor:pointer;" data-toggle="modal" data-target="#modal-signout"> <i class="fa fa-power-off"></i><span> ออกจากระบบ</span></a></li>
