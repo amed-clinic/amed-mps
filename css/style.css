@@ -1,0 +1,10 @@
+.view_edit_job{
+  opacity: 0;
+  float: right;
+  display: block;
+  color:#ddd;
+}
+.view_edit_job:hover{
+  opacity: 1;
+  color:#9e9e9e;
+}
