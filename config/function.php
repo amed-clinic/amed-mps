@@ -82,7 +82,17 @@ function ch_appointment($orderid){
   }
 }
 
-
+///////
+function check_salename($saleid){
+	$sql = "SELECT sale_name
+					FROM mps_sale
+					WHERE (sale_id = '$saleid')";
+	if (select_num($sql)>0) {
+		foreach (select_tb($sql) as $row) {
+			return $row['sale_name'];
+		}
+	}
+}
 
 
 

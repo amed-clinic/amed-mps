@@ -1,3 +1,63 @@
+<?
+if (isset($_POST['SubmitUploadStructure'])) {
+
+  $allowed =  array('pdf');
+  $File = pathinfo($_FILES['ac_Upload']['name'], PATHINFO_EXTENSION);
+  if (  !in_array($File,$allowed)  ) {
+    ?>
+    <div class="alert alert-danger alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <h4><i class="icon fa fa-warning"></i> Alert!</h4>
+      type (pdf) only.
+      <br>File  : <?=$_FILES['ac_Upload']['type'];?>
+    </div>
+    <?
+  }else {
+
+    $tem = explode(".", $_FILES["ac_Upload"]["name"]);
+    $NewFile   = "course_".date("Ymd_his").".".end($tem);
+    $Direct =  "file/course/";
+    if (  move_uploaded_file($_FILES["ac_Upload"]["tmp_name"], $Direct.$NewFile)   ) {
+
+        $sql = "INSERT INTO mps_course
+                  VALUES(0,
+                      '".$_POST['ac_Name']."',
+                      '".$_POST['ac_Detail']."',
+                      '".$NewFile."',
+                      now(),
+                      '".base64url_decode($_COOKIE[$CookieID])."'
+                  );";
+        if (insert_tb($sql)==true) {
+          ?>
+          <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-warning"></i> Alert!</h4>
+            Upload Complete.
+          </div>
+          <meta http-equiv="refresh" content="2;url=<?=$HostLinkAndPath;?>"/>
+          <?
+        }else {
+          ?>
+          <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-warning"></i> Alert!</h4>
+            Can not insert to database.
+          </div>
+          <?
+        }
+    }else {
+      ?>
+      <div class="alert alert-warning alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4><i class="icon fa fa-warning"></i> Alert!</h4>
+        Can not Upload.
+      </div>
+      <?
+    }
+  }
+}
+?>
+
 <div class="row">
   <div class="col-sm-12 col-xs-12">
     <div class="nav-tabs-custom">
@@ -27,7 +87,7 @@
                   <div class="form-group">
                     <label for="" class="col-md-3 control-label">Upload file :*</label>
                     <div class="col-md-9">
-                      <input type="file" class="form-control" id="ac_Spload" name="ac_Upload"/>
+                      <input type="file" class="form-control" id="ac_Upload" name="ac_Upload"/>
                     </div>
                   </div>
 
@@ -200,7 +260,7 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-info ep_UpdatePriceUpload">บันทึก</button>
+        <button type="button" class="btn btn-info ep_UpdatePriceUpload">Save</button>
       </div>
 
     </div>

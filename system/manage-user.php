@@ -259,12 +259,15 @@ if (isset($_POST["SubmitAdd"])) {
                         </select>
                       </div>
                     </div>
+                    <div class="form-group">
+                      <label for="" class="col-md-3 control-label"></label>
+                      <div class="col-md-9">
+                        <button type="submit" class="btn btn-info " id="SubmitAdd" name="SubmitAdd">Submit</button>
+                        <button type="button" class="btn btn-default">Reset</button>
+                      </div>
+                    </div>
 
                   </div>
-                  <div class="col-xs-12">
-                      <button type="submit" class="btn btn-info " id="SubmitAdd" name="SubmitAdd">Submit</button>
-                      <button type="button" class="btn btn-default">Reset</button>
-                    </div>
                 </form>
               </div>
             </div>

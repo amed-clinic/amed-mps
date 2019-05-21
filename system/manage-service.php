@@ -2,7 +2,7 @@
 if (isset($_POST['SubmitAdd'])) {
   $SqlType = "INSERT INTO mps_type
                 VALUES(0,
-                  '".$_POST['at_Name']."',
+                  '".$_POST['as_Name']."',
                   now()
                 );";
   if (insert_tb($SqlType)==true) {
@@ -29,14 +29,14 @@ if (isset($_POST['SubmitAdd'])) {
   <div class="col-xs-12">
       <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#typeuser_show" data-toggle="tab">View Type User</a></li>
-          <li><a href="#typeuser_new" data-toggle="tab">New Type User</a></li>
+          <li class="active"><a href="#typeservice_show" data-toggle="tab">View TypeService</a></li>
+          <li><a href="#typeservice_new" data-toggle="tab">New TypeService</a></li>
         </ul>
         <div class="tab-content">
-          <div class="active tab-pane" id="typeuser_show">
+          <div class="active tab-pane" id="typeservice_show">
             <?
               $sql = "SELECT *
-                      FROM mps_type
+                      FROM mps_service
                       ORDER BY create_date DESC ";
 
               $Per_Page = 100;   // Per Page
@@ -69,7 +69,7 @@ if (isset($_POST['SubmitAdd'])) {
                     <thead>
                       <tr>
                         <th class="text-center">No.</th>
-                        <th class="text-left">Type Name</th>
+                        <th class="text-left">Service Name</th>
                         <th class="text-center">Create Date</th>
                         <th class="text-center">Manage</th>
                       </tr>
@@ -81,13 +81,13 @@ if (isset($_POST['SubmitAdd'])) {
                           ?>
                           <tr>
                             <td class="text-center"><?=($id_run++);?></td>
-                            <td class="text-left"><?=$row['type_name'];?></td>
+                            <td class="text-left"><?=$row['service_name'];?></td>
                             <td class="text-center"><?=date_eng($row['create_date']);?></td>
                             <td class="text-center">
                               <div class="btn-group" style="width: 117px;">
-                                <button id="<?=$row['type_id'];?>" data-toggle="modal" data-target="#modal-set"   class="btn btn-default "><i class="fa fa-search"></i></button>
-                                <button id="<?=$row['type_id'];?>" data-toggle="modal" data-target="#modal-edit" class="btn btn-default "><i class="fa fa-pencil"></i></button>
-                                <button id="<?=$row['type_id'];?>" data-toggle="modal" data-target="#modal-delete" class="btn btn-default"><i class="fa fa-trash-o"></i></button>
+                                <button id="<?=$row['service_id'];?>" data-toggle="modal" data-target="#modal-set"   class="btn btn-default "><i class="fa fa-search"></i></button>
+                                <button id="<?=$row['service_id'];?>" data-toggle="modal" data-target="#modal-edit" class="btn btn-default "><i class="fa fa-pencil"></i></button>
+                                <button id="<?=$row['service_id'];?>" data-toggle="modal" data-target="#modal-delete" class="btn btn-default"><i class="fa fa-trash-o"></i></button>
                               </div>
 
                             </td>
@@ -111,27 +111,28 @@ if (isset($_POST['SubmitAdd'])) {
             </div>
 
           </div>
-          <div class="tab-pane" id="typeuser_new">
+          <div class="tab-pane" id="typeservice_new">
             <div class="row">
               <div class="col-xs-12">
                 <form class="form-horizontal" action="<?=$HostLinkAndPath;?>" method="post">
                   <div class="col-sm-12 col-md-8 col-lg-8">
                     <div class="form-group">
-                      <label for="" class="col-md-3 control-label">TypeName :</label>
+                      <label for="" class="col-md-3 control-label">ServiceName :</label>
                       <div class="col-md-9">
-                        <input type="text" class="form-control" placeholder="Name" id="at_Name" name="at_Name"  required />
+                        <input type="text" class="form-control" placeholder="Service Name" id="as_Name" name="as_Name"  required />
                       </div>
                     </div>
-
-                  </div>
-                  <div class="col-xs-12">
-                      <button type="submit" class="btn btn-info " id="SubmitAdd" name="SubmitAdd">Submit</button>
-                      <button type="button" class="btn btn-default">Reset</button>
+                    <div class="form-group">
+                      <label for="" class="col-md-3 control-label"></label>
+                      <div class="col-md-9">
+                        <button type="submit" class="btn btn-info " id="SubmitAdd" name="SubmitAdd">Submit</button>
+                        <button type="button" class="btn btn-default">Reset</button>
+                      </div>
                     </div>
+                  </div>
                 </form>
               </div>
             </div>
-
           </div>
        </div>
   </div>

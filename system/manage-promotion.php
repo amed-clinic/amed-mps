@@ -1,4 +1,18 @@
+<?
+if (isset($_POST['SubmitAdd'])) {
+  $SqlPromotion = "INSERT INTO mps_promotion
+                      VALUES(0,
+                        '".$_POST['ap_refCode']."',
+                        '".$_POST['au_Name']."',
+                        '".$_POST['ap_Detail']."',
+                        '".$_POST['ap_Month']."',
+                        '".$_POST['ap_Price']."',
+                        '".$_POST['ap_Discount']."',
+                        '".$_POST['ap_TypePromotion']."'
+                      )";
+}
 
+?>
 <div class="row">
   <div class="col-xs-12">
       <div class="nav-tabs-custom">
@@ -146,42 +160,60 @@
                     <div class="form-group">
                       <label for="" class="col-md-3 control-label">PromoName :</label>
                       <div class="col-md-9">
-                        <input type="text" class="form-control" placeholder="Name" id="au_Name" name="au_Name"  required />
+                        <input type="text" class="form-control" placeholder="Name" id="ap_Name" name="ap_Name"  required />
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="" class="col-md-3 control-label">Promo Detail :</label>
                       <div class="col-md-9">
-                        <textarea name="name" class="form-control" placeholder="Promotion Detail"></textarea>
+                        <textarea name="ap_Detail" class="form-control" placeholder="Promotion Detail"></textarea>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="" class="col-md-3 control-label">refCode:</label>
                       <div class="col-md-9">
-                        <input type="text" class="form-control" placeholder="reference code" id="" name=""  required />
+                        <input type="text" class="form-control" placeholder="reference code" id="" name="ap_refCode"  required />
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="" class="col-md-3 control-label">Price :</label>
                       <div class="col-md-9">
-                        <input type="text" class="form-control" placeholder="price 10000" id="" name=""  required />
+                        <input type="text" class="form-control" placeholder="price 10000" id="" name="ap_Price"  required />
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="" class="col-md-3 control-label">Discount Price :</label>
                       <div class="col-md-9">
-                        <input type="text" class="form-control" placeholder="price 9000" id="" name=""  required />
+                        <input type="text" class="form-control" placeholder="price 9000" id="" name="ap_Discount"  required />
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="" class="col-md-3 control-label">For Month :</label>
                       <div class="col-md-9">
-                        <select class="form-control" name="" required>
+                        <select class="form-control" name="ap_Month" required>
                           <option value="">Select Month</option>
                           <?
                             for ($i=1; $i <=12 ; $i++) {
-                              ?><option value="<?=sprintf('%02d', $i);?>" <?=date("m")==sprintf('%02d', $i)?"selected":"";?> >Month <?=sprintf('%02d', $i);;?></option><?
+                              ?><option value="<?=sprintf('%02d', $i);?>" <?=date("m")==sprintf('%02d', $i)?"selected":"";?> >Month <?=sprintf('%02d', $i);?></option><?
                             };
+                          ?>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="col-md-3 control-label">Type Promotion :</label>
+                      <div class="col-md-9">
+                        <select class="form-control" name="ap_TypePromotion" required>
+                          <option value="">Select TypeService</option>
+                          <?
+                            $SqlTypeService = "SELECT service_id,service_name
+                                               FROM mps_service
+                                               ORDER BY service_name ASC";
+                            if (select_num($SqlTypeService)>0) {
+                              foreach (select_tb($SqlTypeService) as $row) {
+                                ?><option value="<?=$row['service_id'];?>"><?=$row['service_name'];?></option><?
+                              }
+                            }
                           ?>
                         </select>
                       </div>

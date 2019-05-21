@@ -196,13 +196,17 @@
                               <div class="timeline-item">
                                 <span class="time"><i class="fa fa-clock-o"></i> <?=substr($row['order_date'],11,5);?></span>
                                 <h3 class="timeline-header"><a class="click_view_booking" style="cursor:pointer;" id="<?=$row['order_id'];?>" data-toggle="modal" data-target="#click_view_booking"><?=$row['cus_name'];?></a></h3>
-                                <div class="timeline-body" style="word-break: break-all;"><?=$row['order_detail'];?><br><br>
-                                  Mobile : <?=$row['cus_mobile'];?>
-                                  <!--<span class="label label-<? foreach ($App as $key => $array) { if ($App[$key][3]==$row['branch_id']) { echo $App[$key][0];   } } ?>" style="font-weight:bold;">Branch : <?=$row['branch_name'];?></span>-->
-                                  <div class="btn-group" style="float:right;">
-                                    <!--<button id="<?=$row['app_id'];?>" data-toggle="modal" class="btn btn-default btn-xs click_view_booking" data-target="#click_view_booking"><i class="fa fa-search"></i></button>-->
-                                    <button id="<?=$row['order_id'];?>" data-toggle="modal" class="btn btn-info btn-xs click_new_appointment" data-target="#click_new_appointment"><i class="fa fa-plus"></i></button>
-                                  </div>
+                                <div class="timeline-body">
+                                  <dt>Detail Order : </dt>
+                                  <dd  style="word-break: break-all;"><?=$row['order_detail'];?></dd>
+                                  <br>
+                                  <dt>Mobile</dt>
+                                  <dd  style="word-break: break-all;"><?=$row['cus_mobile'];?>
+                                    <div class="btn-group" style="float:right;">
+                                      <!--<button id="<?=$row['app_id'];?>" data-toggle="modal" class="btn btn-default btn-xs click_view_booking" data-target="#click_view_booking"><i class="fa fa-search"></i></button>-->
+                                      <button id="<?=$row['order_id'];?>" branch-id="<?=$row['branch_id'];?>" data-toggle="modal" class="btn btn-info btn-xs click_new_appointment" data-target="#click_new_appointment"><i class="fa fa-plus"></i></button>
+                                    </div>
+                                  </dd>
                                 </div>
                               </div>
                             </li>
@@ -236,8 +240,9 @@
     <div class="col-lg-12 col-md-6 col-sm-12">
       <!-- QueJob -->
       <?
-        $SqlCalendarList = "SELECT ma.*,
+        $SqlCalendarList = "SELECT ma.*,ma.sale_id as appsale_id,
                                    mc.cus_id,mc.cus_name,mc.cus_mobile,
+                                   mo.branch_id,mo.order_detail,mo.sale_id as addorder_id,
                                    mb.branch_name
                             FROM mps_appointment ma
                             INNER JOIN mps_order mo ON (ma.order_id = mo.order_id)
@@ -286,13 +291,20 @@
                               <div class="timeline-item">
                                 <span class="time"><i class="fa fa-clock-o"></i> <?=substr($row['app_time'],0,5);?></span>
                                 <h3 class="timeline-header"><a class="click_view_booking" style="cursor:pointer;" id="<?=$row['order_id'];?>" data-toggle="modal" data-target="#click_view_booking"><?=$row['cus_name'];?></a></h3>
-                                <div class="timeline-body"  style="word-break: break-all;"><?=$row['app_detail'];?><br><br>
-                                  Mobile : <?=$row['cus_mobile'];?>
-                                  <!--<span class="label label-<? foreach ($App as $key => $array) { if ($App[$key][3]==$row['branch_id']) { echo $App[$key][0];   } } ?>" style="font-weight:bold;">Branch : <?=$row['branch_name'];?></span>-->
-                                  <div class="btn-group" style="float:right;">
-                                    <!--<button id="<?=$row['app_id'];?>" data-toggle="modal" class="btn btn-default btn-xs click_view_booking" data-target="#click_view_booking"><i class="fa fa-search"></i></button>-->
-                                    <button id="<?=$row['app_id'];?>" data-toggle="modal" class="btn btn-warning btn-xs click_change_appointment" data-target="#click_change_appointment"><i class="fa fa-pencil-square-o"></i></button>
-                                  </div>
+                                <div class="timeline-body">
+                                  <dt>Detail Appointment : </dt>
+                                  <dd  style="word-break: break-all;"><?=$row['app_detail'];?><br><span class="label label-default">By : <?=check_salename($row['appsale_id'])?></span></dd>
+                                  <br>
+                                  <dt>Detail Order : </dt>
+                                  <dd  style="word-break: break-all;"><?=$row['order_detail'];?><br><span class="label label-default">By : <?=check_salename($row['addorder_id'])?></span></dd>
+                                  <br>
+                                  <dt>Mobile</dt>
+                                  <dd  style="word-break: break-all;"><?=$row['cus_mobile'];?>
+                                    <div class="btn-group" style="float:right;">
+                                      <!--<button id="<?=$row['app_id'];?>" data-toggle="modal" class="btn btn-default btn-xs click_view_booking" data-target="#click_view_booking"><i class="fa fa-search"></i></button>-->
+                                      <button id="<?=$row['app_id'];?>" branch-id="<?=$row['branch_id'];?>" data-toggle="modal" class="btn btn-warning btn-xs click_change_appointment" data-target="#click_change_appointment"><i class="fa fa-pencil-square-o"></i></button>
+                                    </div>
+                                  </dd>
                                 </div>
                               </div>
                             </li>

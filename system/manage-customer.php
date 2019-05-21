@@ -1,3 +1,45 @@
+<?
+if (isset($_POST['SubmitAdd'])) {
+  $ACAge = "";
+  $LINE = "";
+  if (!empty($_POST['ACLINEID'])) {
+    $LINE = "'".$_POST['ACLINEID']."'";
+  }
+  if (!empty($_POST['ACAge'])) {
+    $ACAge = "'".$_POST['ACAge']."'";
+  }
+  $SqlCusNew = "INSERT INTO mps_customer
+                  VALUES(0,
+                    '".$_POST['ACRefCode']."',
+                    '".$_POST['ACCusName']."',
+                    '".$_POST['ACMobile']."',
+                    $LINE,
+                    '".$_POST['ACGender']."',
+                    $ACAge,
+                    now()
+                  );";
+  if (insert_tb($SqlCusNew)==true) {
+    ?>
+    <div class="alert alert-success alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <h4><i class="icon fa fa-warning"></i> Alert!</h4>
+      Save Customer Complete.
+    </div>
+    <meta http-equiv="refresh" content="2;url=<?=$HostLinkAndPath;?>"/>
+    <?
+  }else {
+    ?>
+    <div class="alert alert-warning alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <h4><i class="icon fa fa-warning"></i> Alert!</h4>
+      Can not insert Customer.
+    </div>
+    <?
+  }
+}
+
+?>
+
 <div class="row">
   <div class="col-xs-12">
       <div class="nav-tabs-custom">
@@ -147,46 +189,50 @@
                 <form class="form-horizontal" action="<?=$HostLinkAndPath;?>" method="post">
                   <div class="col-sm-12 col-md-8 col-lg-8">
                     <div class="form-group">
-                      <label for="" class="col-md-3 control-label">PromoName :</label>
+                      <label for="" class="col-md-3 control-label">refCode :</label>
                       <div class="col-md-9">
-                        <input type="text" class="form-control" placeholder="Name" id="au_Name" name="au_Name"  required />
+                        <input type="text" class="form-control" placeholder="reference code" id="" name="ACRefCode"  required />
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="" class="col-md-3 control-label">Promo Detail :</label>
+                      <label for="" class="col-md-3 control-label">Name Customer :</label>
                       <div class="col-md-9">
-                        <textarea name="name" class="form-control" placeholder="Promotion Detail"></textarea>
+                        <input type="text" class="form-control" placeholder="Name Customer" id="" name="ACCusName"  required />
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="" class="col-md-3 control-label">refCode:</label>
+                      <label for="" class="col-md-3 control-label">Mobile :</label>
                       <div class="col-md-9">
-                        <input type="text" class="form-control" placeholder="reference code" id="" name=""  required />
+                        <input type="text" class="form-control" placeholder="Mobile" id="" name="ACMobile"  required />
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="" class="col-md-3 control-label">Price :</label>
+                      <label for="" class="col-md-3 control-label">LINE ID :</label>
                       <div class="col-md-9">
-                        <input type="text" class="form-control" placeholder="price 10000" id="" name=""  required />
+                        <input type="text" class="form-control" placeholder="LINE ID" id="" name="ACLINEID"   />
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="" class="col-md-3 control-label">Discount Price :</label>
+                      <label for="" class="col-md-3 control-label">Gender :</label>
                       <div class="col-md-9">
-                        <input type="text" class="form-control" placeholder="price 9000" id="" name=""  required />
+                        <div class="col-sm-9">
+                          <div class="radio">
+                            <label>
+                              <input type="radio" name="ACGender" id="ACGenderM" value="0" checked=""> Male
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <label>
+                              <input type="radio" name="ACGender" id="ACGenderF" value="1"> Female
+                            </label>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="" class="col-md-3 control-label">For Month :</label>
+                      <label for="" class="col-md-3 control-label">Age :</label>
                       <div class="col-md-9">
-                        <select class="form-control" name="" required>
-                          <option value="">Select Month</option>
-                          <?
-                            for ($i=1; $i <=12 ; $i++) {
-                              ?><option value="<?=sprintf('%02d', $i);?>" <?=date("m")==sprintf('%02d', $i)?"selected":"";?> >Month <?=sprintf('%02d', $i);;?></option><?
-                            };
-                          ?>
-                        </select>
+                        <input type="text" class="form-control"  placeholder="Age ex. 20" id="ACAge" name="ACAge" />
                       </div>
                     </div>
 

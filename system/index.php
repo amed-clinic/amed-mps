@@ -403,7 +403,7 @@
               <li class="<?=$UrlPage=="que-job"?"active":"";?>"><a href="<?=$LinkHostWeb;?>que-job"><i class="fa fa-list"></i> <span> QueJob</span></a></li>
               <li class="<?=$UrlPage=="plan-doctor"?"active":"";?>"><a href="<?=$LinkHostWeb;?>plan-doctor"><i class="fa fa-calendar-o"></i> <span> Doctor</span></a></li>
 
-              <li class="treeview  <?=$UrlPage=="manage-doctor"||$UrlPage=="manage-user"||$UrlPage=="manage-promotion"||$UrlPage=="manage-branch"||$UrlPage=="manage-customer"||$UrlPage=="manage-type"||$UrlPage=="manage-course"?"active":"";?>">
+              <li class="treeview  <?=$UrlPage=="manage-doctor"||$UrlPage=="manage-user"||$UrlPage=="manage-promotion"||$UrlPage=="manage-service"||$UrlPage=="manage-branch"||$UrlPage=="manage-customer"||$UrlPage=="manage-type"||$UrlPage=="manage-course"?"active":"";?>">
                 <a href="#">
                   <i class="fa fa-cogs"></i>
                   <span>Management</span>
@@ -417,6 +417,7 @@
                   <li class="<?=$UrlPage=="manage-type"?"active":"";?>"><a href="<?=$LinkHostWeb;?>manage-type"><i class="fa fa-caret-right"></i> <span> Type User</span></a></li>
                   <li class="<?=$UrlPage=="manage-course"?"active":"";?>"><a href="<?=$LinkHostWeb;?>manage-course"><i class="fa fa-caret-right"></i> <span> Course</span></a></li>
                   <li class="<?=$UrlPage=="manage-promotion"?"active":"";?>"><a href="<?=$LinkHostWeb;?>manage-promotion"><i class="fa fa-caret-right"></i> <span> Promotion</span></a></li>
+                  <li class="<?=$UrlPage=="manage-service"?"active":"";?>"><a href="<?=$LinkHostWeb;?>manage-service"><i class="fa fa-caret-right"></i> <span> Service</span></a></li>
                   <li class="<?=$UrlPage=="manage-branch"?"active":"";?>"><a href="<?=$LinkHostWeb;?>manage-branch"><i class="fa fa-caret-right"></i> <span> Branch</span></a></li>
                   <li class="<?=$UrlPage=="manage-customer"?"active":"";?>"><a href="<?=$LinkHostWeb;?>manage-customer"><i class="fa fa-caret-right"></i> <span> Customer</span></a></li>
                 </ul>
@@ -466,6 +467,7 @@
                 case 'manage-user'          :   include("manage-user.php"); 	 		  break;
                 case 'manage-course'        :   include("manage-course.php"); 	 		break;
                 case 'manage-promotion'     :   include("manage-promotion.php"); 	 	break;
+                case 'manage-service'       :   include("manage-service.php"); 	 	break;
                 case 'manage-branch'        :   include("manage-branch.php"); 	 		break;
                 case 'manage-customer'      :   include("manage-customer.php"); 	 	break;
                 case 'manage-type'          :   include("manage-type.php"); 	 		  break;
@@ -1171,18 +1173,20 @@
       <script>
         $(document).ready(function() {
 
-          $(".click_new_appointment").click(function(event) {
+          $(".click_new_appointment").click(function(e) {
             $(".click_confirm_appointment").attr("id",$(this).attr("id"));
+            //$("#NBBranch").val($(this).attr("branch-id"));
+            //alert($(this).attr("branch-id"));
           });
 
           $(".click_confirm_appointment").click(function(event) {
-            if ( $("#NABranch").val() != "" && $("#NADate").val() != "" && $("#NBTime").val() != "" && $("#NBDetail").val() != "" ) {
+            if ( $("#NBBranch").val() != "" && $("#NBDate").val() != "" && $("#NBTime").val() != "" && $("#NBDetail").val() != "" ) {
               $.post("../../query/check-data.php",
               {
                 _orderid : $(this).attr("id"),
-                _date : $("#NADate").val(),
+                _date : $("#NBDate").val(),
                 _time : $("#NBTime").val(),
-                _branch : $("#NABranch").val(),
+                _branch : $("#NBBranch").val(),
                 _detail : $("#NBDetail").val(),
                 post : "New-Appointment"
               },
@@ -1224,7 +1228,7 @@
                         <div class="form-group">
                           <label for="" class="col-sm-3 control-label">Branch</label>
                           <div class="col-sm-9">
-                            <select class="form-control select2" data-placeholder="Select Branch" id="NABranch" name="NABranch" style="width: 100%;">
+                            <select class="form-control select2" data-placeholder="Select Branch" id="NBBranch" name="NBBranch" style="width: 100%;">
                               <?
                                 $SqlBranch = " SELECT branch_id,branch_name
                                                FROM mps_branch
@@ -1243,13 +1247,13 @@
                         <div class="form-group">
                           <label for="" class="col-sm-3 control-label">Date</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control"  minDate="<?=date("Y-m-d");?>" placeholder="Date" id="NBDate" name="NBDate" data-date-format="yyyy-mm-dd"  />
+                            <input type="text" class="form-control"  minDate="<?=date("Y-m-d");?>" placeholder="<?=date("Y-m-d");?>" id="NBDate" name="NBDate" data-date-format="yyyy-mm-dd"  />
                           </div>
                         </div>
                         <div class="form-group">
                           <label for="" class="col-sm-3 control-label">Time</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" id="NBTime" name="NBTime" data-inputmask="'alias': 'time'" />
+                            <input type="text" class="form-control" id="NBTime" name="NBTime" value="" placeholder="<?=date("H:s");?>"  />
                           </div>
                         </div>
                         <div class="form-group">
@@ -1278,6 +1282,45 @@
 
 
       <!--- Change Appointment -->
+      <script>
+        $(document).ready(function() {
+
+          $(".click_change_appointment").click(function(event) {
+            $(".click_confirm_change_appointment").attr("id",$(this).attr("id"));
+            $("#CABranch").val($(this).attr("branch-id"));
+            //alert($(this).attr("branch-id"));
+          });
+
+
+          $(".click_confirm_change_appointment").click(function(event) {
+            if ( $("#CABranch").val() != "" && $("#CADate").val() != "" && $("#CATime").val() != "" && $("#CADetail").val() != "" ) {
+              $.post("../../query/check-data.php",
+              {
+                _orderid : $(this).attr("id"),
+                _date : $("#CADate").val(),
+                _time : $("#CATime").val(),
+                _branch : $("#CABranch").val(),
+                _detail : $("#CADetail").val(),
+                post : "Change-Appointment"
+              },
+              function(d){
+                var i = d.split("|||");
+                if (i[0]=="C") {
+                  $(".CAShowPop").html(i[1]);
+                  setTimeout(function(){
+                    window.location.href = "<?=$LinkPath;?>";
+                  },2000);
+                }else {
+                  $(".CAShowPop").html(d);
+                }
+              });
+            }else {
+              $(".CAShowPop").html("<div class='alert alert-warning alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-warning'></i> Alert!</h4> Please insert value.</div>");
+            }
+          });
+
+        });
+      </script>
       <div id="click_change_appointment" class="modal fade" role="dialog">
         <div class="modal-dialog modal-md">
 
@@ -1298,7 +1341,7 @@
                         <div class="form-group">
                           <label for="" class="col-sm-3 control-label">Branch</label>
                           <div class="col-sm-9">
-                            <select class="form-control select2" data-placeholder="Select Branch" id="" name="" style="width: 100%;">
+                            <select class="form-control select2" data-placeholder="Select Branch" id="CABranch" name="CABranch" style="width: 100%;">
                               <?
                                 $SqlBranch = " SELECT branch_id,branch_name
                                                FROM mps_branch
@@ -1317,30 +1360,31 @@
                         <div class="form-group">
                           <label for="" class="col-sm-3 control-label">Date</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control"  placeholder="Date" id="" name="" required />
+                            <input type="text" class="form-control"  placeholder="Date" id="CADate" name="CADate" required />
                           </div>
                         </div>
                         <div class="form-group">
                           <label for="" class="col-sm-3 control-label">Time</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control"  placeholder="Time" id="" name="" required />
+                            <input type="text" class="form-control"  placeholder="Time" id="CATime" name="CATime" required />
                           </div>
                         </div>
                         <div class="form-group">
                           <label for="" class="col-sm-3 control-label">Detail</label>
                           <div class="col-sm-9">
-                            <textarea class="form-control"  placeholder="Detail...." id="" name="" required ></textarea>
+                            <textarea class="form-control"  placeholder="Detail...." id="CADetail" name="CADetail" required ></textarea>
                           </div>
                         </div>
                       </div>
                     </form>
                   </div>
+                  <div class="col-xs-12 CAShowPop"></div>
                   <!-- Detail Booking -->
 
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Update</button>
+              <button type="button" class="btn btn-primary click_confirm_change_appointment">Update</button>
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </div>
@@ -1401,9 +1445,15 @@
             autoclose: true,
             startDate: '1'
           });
+          $('#CADate').datepicker({
+            dateFormat: "yy-mm-dd",
+            autoclose: true,
+            startDate: '1'
+          });
 
           // Initialize InputMask
-          $("#NBTime").inputmask({inputFormat : 'HH:mm'});
+          $("#NBTime").inputmask("h:s");
+          $("#CATime").inputmask("h:s");
 
         });
       </script>

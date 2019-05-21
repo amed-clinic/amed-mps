@@ -154,9 +154,9 @@
                                 <button id="<?=$row['order_id'];?>" data-toggle="modal" class="btn btn-warning click_change_booking" data-target="#click_change_booking"><i class="fa fa-cog"></i></button>
                                 <?
                                   if (ch_appointment($row['order_id'])==true) {
-                                    ?><button id="<?=$row['order_id'];?>" data-toggle="modal" class="btn btn-danger click_new_appointment" data-target="#click_new_appointment"><i class="fa fa-calendar-plus-o"></i></button><?
+                                    ?><button id="<?=$row['order_id'];?>" branch-id="<?=$row['branch_id'];?>" data-toggle="modal" class="btn btn-danger click_new_appointment" data-target="#click_new_appointment"><i class="fa fa-calendar-plus-o"></i></button><?
                                   }else {
-                                    ?><button id="<?=$row['app_id'];?>" data-toggle="modal" class="btn btn-default click_change_appointment" data-target="#click_change_appointment"><i class="fa fa-calendar-check-o"></i></button><?
+                                    ?><button id="<?=$row['app_id'];?>" branch-id="<?=$row['branch_id'];?>" data-toggle="modal" class="btn btn-default click_change_appointment" data-target="#click_change_appointment"><i class="fa fa-calendar-check-o"></i></button><?
                                   }
                                 ?>
                                 <button id="<?=$row['order_id'];?>" data-toggle="modal" class="btn btn-default click_delete_booking" data-target="#click_delete_booking"><i class="fa fa-trash"></i></button>
