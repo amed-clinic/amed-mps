@@ -13,17 +13,17 @@ global $SessionID,$SessionName,$SessionType,$SessionBranch,$SessionGroup;
 
 
 
-$LinkWeb 		= "https://mps.amedclinic.com/";
-$LinkPath 		  = "https://mps.amedclinic.com".$_SERVER['REQUEST_URI'];
-$LinkHostWeb 		= "https://amedclinic.com/mps/";
+$LinkWeb 		= "http://mps.startconcept.com/";
+$LinkPath 		  = "http://mps.startconcept.com".$_SERVER['REQUEST_URI'];
+$LinkHostWeb 		= "http://mps.startconcept.com/";
 $LinkHostLocal 	= $LinkWeb;
 $LinkHostAdmin  = "";
 
 define(SITE_URL,$LinkWeb);
 
-$Path         = $LinkWeb.$_SERVER['REQUEST_URI'];
-$PathExplode  = explode("/",$Path);
-$Url          = $PathExplode[0];
+$Path         = $LinkPath;
+$PathExplode  = explode("/",$_SERVER['REQUEST_URI']);
+$Url          = "http://mps.startconcept.com";
 $UrlPage      = $PathExplode[1];
 $UrlId        = $PathExplode[2];
 $UrlIdSub     = $PathExplode[3];
@@ -76,19 +76,24 @@ function ConnectToDB() {
 	global $Link, $Host, $User, $Pass, $DBname;
 
 
-  /*
   //server test.startconcept
   $Host = "localhost";
   $User = "startcon_test";
   $Pass = "startcon_test";
   $DBname = "startcon_test";
-  */
+  /*
+  //server mps.amedgroup.co.th
+  $Host = "localhost";
+  $User = "amedgroup_mps";
+  $Pass = "amedgroup_mps";
+  $DBname = "amedgroup_mps";
+
   //server mps.amedclinic
 	$Host = "localhost";
 	$User = "admin_mps";
 	$Pass = "admin_mps";
 	$DBname = "admin_mps";
-
+  */
 
 	$Link = mysql_connect($Host,$User,$Pass) or die(mysql_error());
 	mysql_select_db($DBname,$Link) or die(mysql_error());
@@ -150,55 +155,6 @@ function base64url_encode($data) { return base64_encode($data); }
 
 function base64url_decode($data) { return base64_decode($data); }
 
-
-
-//// check data on cookie
-function check_user($id,$colum){
-	$sql = "SELECT *
-					FROM mps_login
-					WHERE ( login_id = '".base64url_decode($id)."' ) ;";
-	if (select_num($sql)>0) {
-		foreach (select_tb($sql) as $row) {
-			return $row[$colum];
-		}
-	}else {
-		return "-";
-	}
-}
-
-function date_time($value){
-	$year = substr($value,2,2);
-	$month = substr($value,5,2);
-	$date = substr($value,8,2);
-  $time = substr($value,11,8);
-  $array_month = array("ม.ค.","ก.พ.","มี.ค.","ม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
-	///$array_month = array("+","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
-	return $date." ".$array_month[$month-1]." ".$year." ".$time;
-}
-function date_thaishot($value){
-	$year = substr($value,2,2);
-	$month = substr($value,5,2);
-	$date = substr($value,8,2);
-  $array_month = array("ม.ค.","ก.พ.","มี.ค.","ม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
-	///$array_month = array("+","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
-	return $date." ".$array_month[$month-1]." ".$year;
-}
-function date_engshot($value){
-	$year = substr($value,2,2);
-	$month = substr($value,5,2);
-	$date = substr($value,8,2);
-  $array_month = array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
-	return $date." ".$array_month[$month-1]." ".$year;
-}
-function DateDiff($strDate1,$strDate2){
-		$i = (((strtotime($strDate2) - strtotime($strDate1))/  ( 60 * 60 * 24 )) + 1);  // 1 day = 60*60*24
-    if ($i>=0) {
-      return $i;
-    }else {
-      return '0';
-    }
-}
-
-
+require('function.php');
 
 ?>

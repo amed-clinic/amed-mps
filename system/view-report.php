@@ -1,4 +1,30 @@
 <div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">Select Date</h3>
+      </div>
+      <div class="box-body">
+        <div class="col-xs-12">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <input type="text" class="form-control pull-right" id="reservation" readonly>
+          </div>
+        </div>
+        <div class="col-xs-12" style="padding-top:10px;
+        ">
+          <button type="button" class="btn btn-info" name="">Apply</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="row">
   <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
     <div class="small-box bg-aqua">
       <div class="inner">
